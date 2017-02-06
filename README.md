@@ -10,13 +10,13 @@ $ npm run server
 
 ### Basics
 ```
+$ mkdir public src
+```
+```
 $ touch README.md
 ```
 ```
 $ touch .gitignore
-```
-```
-$ mkdir public src
 ```
 ```
 $ touch src/app.js
@@ -49,22 +49,4 @@ $ npm i --save babel-preset-react babel-preset-es2015 watchify babelify live-ser
 ### .gitignore
 ```
 /node_modules
-```
-
-### index.html
-```
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="UTF-8" />
-    <title>Hello World</title>
-    <script src="https://unpkg.com/react@latest/dist/react.js"></script>
-    <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.min.js"></script>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script src="/bundle.js"></script>
-  </body>
-</html>
 ```
