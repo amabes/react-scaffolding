@@ -1,5 +1,13 @@
 # REACT SCAFFOLDING & TOOLING
 
+## Local Dev
+```
+$ npm run build
+```
+```
+$ npm run server
+```
+
 ### Basics
 ```
 $ touch README.md
