@@ -5,7 +5,7 @@
 $ npm run build
 ```
 ```
-$ npm run server
+$ npm run start
 ```
 
 ### Basics
@@ -41,7 +41,7 @@ $ npm i --save babel-preset-react babel-preset-es2015 watchify babelify live-ser
   "scripts":{
     ...
     "build": "watchify src/app.js -o public/bundle.js -t [babelify --presets [react es2015]]",
-    "server": "cd public; live-server --port=1234 --entry-file=index.html"
+    "start": "cd public; live-server --port=1234 --entry-file=index.html"
   }
 }
 ```
