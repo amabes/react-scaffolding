@@ -64,6 +64,7 @@ $ npm i --save babel-preset-react babel-preset-es2015 watchify babelify live-ser
       );
 
     </script>
+    <script src="public/bundle.js"></script>
   </body>
 </html>
 ```
