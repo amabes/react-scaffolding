@@ -52,7 +52,7 @@ $ npm i --save babel-preset-react babel-preset-es2015 watchify babelify live-ser
     <title>Hello World</title>
     <script src="https://unpkg.com/react@latest/dist/react.js"></script>
     <script src="https://unpkg.com/react-dom@latest/dist/react-dom.js"></script>
-    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/3.6.0/redux.min.js"></script>
   </head>
   <body>
     <div id="root"></div>
@@ -64,7 +64,7 @@ $ npm i --save babel-preset-react babel-preset-es2015 watchify babelify live-ser
       );
 
     </script>
-    <script src="public/bundle.js"></script>
+    <script src="/bundle.js"></script>
   </body>
 </html>
 ```
