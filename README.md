@@ -64,14 +64,6 @@ $ npm i --save babel-preset-react babel-preset-es2015 watchify babelify live-ser
   </head>
   <body>
     <div id="root"></div>
-    <script type="text/babel">
-
-      ReactDOM.render(
-        <h1>Hello, world!</h1>,
-        document.getElementById('root')
-      );
-
-    </script>
     <script src="/bundle.js"></script>
   </body>
 </html>
