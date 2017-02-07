@@ -1,4 +1,3 @@
-console.log('hello react world!');
 const cards = (state, action) => {
   switch (action.type) {
     case 'ADD_CARD':
@@ -17,22 +16,11 @@ const store = Redux.createStore(Redux.combineReducers({
   cards
 }));
 
-store.subscribe(() => {
-  console.log(store.getState());
-});
+const App = () => {
+  return (
+  <div className="app">
+    <h1>Hello React</h1>
+  </div>);
+};
 
-store.dispatch({
-  type: 'ADD_CARD',
-  data: {
-    front: 'front',
-    back:  'back'
-  }
-});
-
-store.dispatch({
-  type: 'ADD_CARD',
-  data: {
-    front: 'yep',
-    back:  'nope'
-  }
-});
+ReactDOM.render(<App />, document.getElementById('root'));
