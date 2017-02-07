@@ -13,18 +13,8 @@ $ npm start
 $ mkdir public src
 ```
 ```
-$ touch README.md
+$ touch README.md .gitignore src/app.js public/index.html
 ```
-```
-$ touch .gitignore
-```
-```
-$ touch src/app.js
-```
-```
-$ touch public/index.html
-```
-
 ### Initialize NPM (w/defaults)
 ```
 $ npm init --yes
@@ -40,7 +30,7 @@ $ npm i --save babel-preset-react babel-preset-es2015 watchify babelify live-ser
 {
   "scripts":{
     ...
-    "build": "watchify src/app.js -o public/bundle.js -t [babelify --presets [react es2015]]",
+    "build": "watchify src/app.js -o public/bundle.js -t [ babelify --presets [ react es2015 ] ]",
     "start": "cd public; live-server --port=1234 --entry-file=index.html"
   }
 }
