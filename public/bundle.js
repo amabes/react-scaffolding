@@ -19,18 +19,18 @@ var store = Redux.createStore(Redux.combineReducers({
   cards: cards
 }));
 
-var App = function App() {
+var App = function App(props) {
   return React.createElement(
     'div',
     { className: 'app' },
-    React.createElement(
-      'h1',
-      null,
-      'Hello React'
-    )
+    props.children
   );
 };
 
-ReactDOM.render(React.createElement(App, null), document.getElementById('root'));
+ReactDOM.render(React.createElement(
+  App,
+  null,
+  'Hello'
+), document.getElementById('root'));
 
 },{}]},{},[1]);

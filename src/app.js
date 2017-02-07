@@ -16,11 +16,11 @@ const store = Redux.createStore(Redux.combineReducers({
   cards
 }));
 
-const App = () => {
+const App = (props) => {
   return (
   <div className="app">
-    <h1>Hello React</h1>
+    {props.children}
   </div>);
 };
 
-ReactDOM.render(<App />, document.getElementById('root'));
+ReactDOM.render(<App>Hello</App>, document.getElementById('root'));
