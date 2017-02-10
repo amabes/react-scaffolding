@@ -42,8 +42,3 @@ $ npm i --save-dev node-sass
   }
 }
 ```
-
-### .gitignore
-```
-/node_modules
-```
