@@ -1,8 +1,12 @@
 # REACT SCAFFOLDING & TOOLING
 
 ## Local Dev
+Run the following NPM scripts in separate terminal tabs.
 ```
 $ npm run build
+```
+```
+$ npm run scss
 ```
 ```
 $ npm start

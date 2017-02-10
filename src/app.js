@@ -18,7 +18,7 @@ const store = Redux.createStore(Redux.combineReducers({
 
 const App = (props) => {
   return (
-  <div className="app">
+  <div className="app container">
     {props.children}
   </div>);
 };
@@ -65,85 +65,23 @@ const Sidebar = React.createClass({
   render() {
     let props = this.props;
 
-    return(<div className="sidebar">
-    <h2>Decks</h2>
-
-    {props.decks.map((deck, i) =>
-      <div className="card col-xs-6" key={ i }>
-        <img className="card-img-top" src={ deck.url } />
-        <div className="card-block">
-          <h4 className="card-title">{ deck.title }</h4>
-          <p className="card-text">{ deck.body }</p>
-        </div>
-        { deck.links && <Links links={deck.links}  /> }
-      </div>
-    )}
-
-    { props.addingDeck && <input ref="add" /> }
-    </div>);
-  }
-});
-
-const Cards = React.createClass({
-  render() {
-    let props = this.props;
-
-    return(<div className="row">
-    {props.decks.map((deck, i) =>
-      <div className="col-4" key={ i }>
-        <div className="card">
-          { deck.url && <img className="card-img-top" src={ deck.url } />}
-          <div className="card-block">
-            <p className="card-text">{ deck.body }</p>
-          </div>
-          { deck.links && <Links links={deck.links}  /> }
-        </div>
-      </div>
-    )}
+    return(<div className="deck">
+      {props.decks.map((deck, i) =>
+        { deck.title }
+      )}
     </div>);
   }
 });
 
 const decks = [{
   id: +new Date,
-  url: 'http://lorempixel.com/230/151/',
-  body: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.',
-  links: [{
-      text: 'Cras justo odio',
-      href: '#internal-unique-id'
-    },
-    {
-      text: 'Dapibus ac facilisis in',
-      href: 'http://google.com'
-    },
-    {
-      text: 'Vestibulum at eros',
-      href: '#internal-unique-id'
-  }]
+  title: 'Deck 1'
 },
 {
   id: +new Date,
-  body: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.',
-  links: [
-    {
-      text: 'Cras justo odio 2',
-      href: 'http://google.com'
-    },
-    {
-      text: 'Dapibus ac facilisis in 2',
-      href: '#internal-unique-id'
-    },
-    {
-      text: 'Vestibulum at eros 2',
-      href: 'http://google.com'
-    }
-  ]
-},
-{
-  id: +new Date,
-  body: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.'
+  title: 'Deck 2'
 }];
 
-ReactDOM.render(<App class="container">
-  <Cards decks={decks} />
+ReactDOM.render(<App>
+  <Sidebar decks={decks} />
 </App>, document.getElementById('root'));
