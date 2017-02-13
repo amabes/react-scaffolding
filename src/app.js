@@ -58,10 +58,7 @@ const Navbar = React.createClass({
   render() {
     return(<nav className="navbar navbar-toggleable-md navbar-inverse bg-inverse">
       <a className="navbar-brand" href="javascript:void(0);">React Scaffolding</a>
-
-      <div className="collapse navbar-collapse" id="navbarsExampleDefault">
-       <button className="btn btn-primary btn-sm" type="submit">New Deck</button>
-      </div>
+      <div className="collapse navbar-collapse" id="navbarsExampleDefault"></div>
    </nav>);
   }
 })
@@ -77,8 +74,16 @@ const Sidebar = React.createClass({
           <li key={i} className="nav-item">{ deck.name }</li>
         )}
       </ul>
-      { props.addingDeck && <input ref="add" /> }
+      { props.addingDeck && <input autoFocus ref="add" onKeyPress={this.createDeck}/> }
+      <button onClick={e => this.props.showAddDeck()} className="btn btn-primary btn-sm" type="submit">New Deck</button>
     </nav>);
+  },
+  createDeck(e){
+    if (e.which !== 13) return;
+    var name = ReactDOM.findDOMNode(this.refs.add).value;
+
+    this.props.addDeck(name);
+    this.props.hideAddDeck();
   }
 });
 
@@ -86,7 +91,13 @@ function run() {
   let state = store.getState();
 
   ReactDOM.render(<App>
-    <Sidebar decks={state.decks} addingDeck={state.addingDeck}/>
+    <Sidebar
+      decks={state.decks}
+      addingDeck={state.addingDeck}
+      addDeck={name => store.dispatch(addDeck(name))}
+      showAddDeck={() => store.dispatch(showAddDeck())}
+      hideAddDeck={() => store.dispatch(hideAddDeck())}
+    />
     <main className="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
       <br />
       <br />
@@ -99,8 +110,3 @@ function run() {
 run();
 
 store.subscribe(run);
-
-
-window.show = () => store.dispatch(showAddDeck());
-window.hide = () => store.dispatch(hideAddDeck());
-window.add = () => store.dispatch(addDeck(new Date().toString()));
