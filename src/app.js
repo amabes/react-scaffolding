@@ -1,3 +1,7 @@
+const addDeck = name => ({ type: 'ADD_DECK', data: name });
+const showAddDeck = () => ({ type: 'SHOW_ADD_DECK' });
+const hideAddDeck = () => ({ type: 'HIDE_ADD_DECK' });
+
 const cards = (state, action) => {
   switch (action.type) {
     case 'ADD_CARD':
@@ -12,8 +16,30 @@ const cards = (state, action) => {
   }
 };
 
+const decks = (state, action) => {
+  switch (action.type) {
+    case 'ADD_DECK':
+      let newDeck = { name: action.data, id: +new Date };
+
+      return state.concat([newDeck]);
+    default:
+      return state || [];
+  }
+}
+
+const addingDeck = (state, action) => {
+  switch(action.type) {
+    case 'SHOW_ADD_DECK': return true;
+    case 'HIDE_ADD_DECK': return false;
+    default: return state || false;
+
+  }
+}
+
 const store = Redux.createStore(Redux.combineReducers({
-  cards
+  cards,
+  decks,
+  addingDeck
 }));
 
 const App = (props) => {
@@ -48,7 +74,7 @@ const Sidebar = React.createClass({
       <h5>All Decks</h5>
       <ul className="nav nav-pills flex-column">
         {props.decks.map((deck, i) =>
-          <li key={i} className="nav-item">{ deck.title }</li>
+          <li key={i} className="nav-item">{ deck.name }</li>
         )}
       </ul>
       { props.addingDeck && <input ref="add" /> }
@@ -56,21 +82,25 @@ const Sidebar = React.createClass({
   }
 });
 
-const decks = [{
-  id: +new Date,
-  title: 'Deck 1'
-},
-{
-  id: +new Date,
-  title: 'Deck 2'
-}];
+function run() {
+  let state = store.getState();
 
-ReactDOM.render(<App>
-  <Sidebar decks={decks} addingDeck={true}/>
-  <main className="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
-    <br />
-    <br />
-    <br />
-    Hello
-  </main>
-</App>, document.getElementById('root'));
+  ReactDOM.render(<App>
+    <Sidebar decks={state.decks} addingDeck={state.addingDeck}/>
+    <main className="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+      <br />
+      <br />
+      <br />
+      Hello
+    </main>
+  </App>, document.getElementById('root'));
+}
+
+run();
+
+store.subscribe(run);
+
+
+window.show = () => store.dispatch(showAddDeck());
+window.hide = () => store.dispatch(hideAddDeck());
+window.add = () => store.dispatch(addDeck(new Date().toString()));

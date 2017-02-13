@@ -1,5 +1,15 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-"use strict";
+'use strict';
+
+var addDeck = function addDeck(name) {
+  return { type: 'ADD_DECK', data: name };
+};
+var showAddDeck = function showAddDeck() {
+  return { type: 'SHOW_ADD_DECK' };
+};
+var hideAddDeck = function hideAddDeck() {
+  return { type: 'HIDE_ADD_DECK' };
+};
 
 var cards = function cards(state, action) {
   switch (action.type) {
@@ -15,21 +25,46 @@ var cards = function cards(state, action) {
   }
 };
 
+var decks = function decks(state, action) {
+  switch (action.type) {
+    case 'ADD_DECK':
+      var newDeck = { name: action.data, id: +new Date() };
+
+      return state.concat([newDeck]);
+    default:
+      return state || [];
+  }
+};
+
+var addingDeck = function addingDeck(state, action) {
+  switch (action.type) {
+    case 'SHOW_ADD_DECK':
+      return true;
+    case 'HIDE_ADD_DECK':
+      return false;
+    default:
+      return state || false;
+
+  }
+};
+
 var store = Redux.createStore(Redux.combineReducers({
-  cards: cards
+  cards: cards,
+  decks: decks,
+  addingDeck: addingDeck
 }));
 
 var App = function App(props) {
   return React.createElement(
-    "div",
-    { className: "app" },
+    'div',
+    { className: 'app' },
     React.createElement(Navbar, null),
     React.createElement(
-      "div",
-      { className: "container-fluid" },
+      'div',
+      { className: 'container-fluid' },
       React.createElement(
-        "div",
-        { className: "row" },
+        'div',
+        { className: 'row' },
         props.children
       )
     )
@@ -37,23 +72,23 @@ var App = function App(props) {
 };
 
 var Navbar = React.createClass({
-  displayName: "Navbar",
+  displayName: 'Navbar',
   render: function render() {
     return React.createElement(
-      "nav",
-      { className: "navbar navbar-toggleable-md navbar-inverse bg-inverse" },
+      'nav',
+      { className: 'navbar navbar-toggleable-md navbar-inverse bg-inverse' },
       React.createElement(
-        "a",
-        { className: "navbar-brand", href: "javascript:void(0);" },
-        "React Scaffolding"
+        'a',
+        { className: 'navbar-brand', href: 'javascript:void(0);' },
+        'React Scaffolding'
       ),
       React.createElement(
-        "div",
-        { className: "collapse navbar-collapse", id: "navbarsExampleDefault" },
+        'div',
+        { className: 'collapse navbar-collapse', id: 'navbarsExampleDefault' },
         React.createElement(
-          "button",
-          { className: "btn btn-primary btn-sm", type: "submit" },
-          "New Deck"
+          'button',
+          { className: 'btn btn-primary btn-sm', type: 'submit' },
+          'New Deck'
         )
       )
     );
@@ -61,54 +96,64 @@ var Navbar = React.createClass({
 });
 
 var Sidebar = React.createClass({
-  displayName: "Sidebar",
+  displayName: 'Sidebar',
   render: function render() {
     var props = this.props;
 
     return React.createElement(
-      "nav",
-      { className: "col-sm-4 col-lg-3 hidden-xs-down bg-faded sidebar" },
+      'nav',
+      { className: 'col-sm-4 col-lg-3 hidden-xs-down bg-faded sidebar' },
       React.createElement(
-        "h5",
+        'h5',
         null,
-        "All Decks"
+        'All Decks'
       ),
       React.createElement(
-        "ul",
-        { className: "nav nav-pills flex-column" },
+        'ul',
+        { className: 'nav nav-pills flex-column' },
         props.decks.map(function (deck, i) {
           return React.createElement(
-            "li",
-            { key: i, className: "nav-item" },
-            deck.title
+            'li',
+            { key: i, className: 'nav-item' },
+            deck.name
           );
         })
       ),
-      props.addingDeck && React.createElement("input", { ref: "add" })
+      props.addingDeck && React.createElement('input', { ref: 'add' })
     );
   }
 });
 
-var decks = [{
-  id: +new Date(),
-  title: 'Deck 1'
-}, {
-  id: +new Date(),
-  title: 'Deck 2'
-}];
+function run() {
+  var state = store.getState();
 
-ReactDOM.render(React.createElement(
-  App,
-  null,
-  React.createElement(Sidebar, { decks: decks, addingDeck: true }),
-  React.createElement(
-    "main",
-    { className: "col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" },
-    React.createElement("br", null),
-    React.createElement("br", null),
-    React.createElement("br", null),
-    "Hello"
-  )
-), document.getElementById('root'));
+  ReactDOM.render(React.createElement(
+    App,
+    null,
+    React.createElement(Sidebar, { decks: state.decks, addingDeck: state.addingDeck }),
+    React.createElement(
+      'main',
+      { className: 'col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3' },
+      React.createElement('br', null),
+      React.createElement('br', null),
+      React.createElement('br', null),
+      'Hello'
+    )
+  ), document.getElementById('root'));
+}
+
+run();
+
+store.subscribe(run);
+
+window.show = function () {
+  return store.dispatch(showAddDeck());
+};
+window.hide = function () {
+  return store.dispatch(hideAddDeck());
+};
+window.add = function () {
+  return store.dispatch(addDeck(new Date().toString()));
+};
 
 },{}]},{},[1]);
