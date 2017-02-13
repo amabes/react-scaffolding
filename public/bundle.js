@@ -63,20 +63,28 @@ var Navbar = React.createClass({
 var Sidebar = React.createClass({
   displayName: "Sidebar",
   render: function render() {
+    var props = this.props;
+
     return React.createElement(
       "nav",
-      { className: "col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar" },
+      { className: "col-sm-4 col-lg-3 hidden-xs-down bg-faded sidebar" },
+      React.createElement(
+        "h5",
+        null,
+        "All Decks"
+      ),
       React.createElement(
         "ul",
         { className: "nav nav-pills flex-column" },
-        this.props.decks.map(function (deck, i) {
+        props.decks.map(function (deck, i) {
           return React.createElement(
             "li",
             { key: i, className: "nav-item" },
             deck.title
           );
         })
-      )
+      ),
+      props.addingDeck && React.createElement("input", { ref: "add" })
     );
   }
 });
@@ -92,7 +100,7 @@ var decks = [{
 ReactDOM.render(React.createElement(
   App,
   null,
-  React.createElement(Sidebar, { decks: decks }),
+  React.createElement(Sidebar, { decks: decks, addingDeck: true }),
   React.createElement(
     "main",
     { className: "col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" },

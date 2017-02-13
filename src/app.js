@@ -42,12 +42,16 @@ const Navbar = React.createClass({
 
 const Sidebar = React.createClass({
   render() {
-    return(<nav className="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+    let props = this.props;
+
+    return(<nav className="col-sm-4 col-lg-3 hidden-xs-down bg-faded sidebar">
+      <h5>All Decks</h5>
       <ul className="nav nav-pills flex-column">
-        {this.props.decks.map((deck, i) =>
+        {props.decks.map((deck, i) =>
           <li key={i} className="nav-item">{ deck.title }</li>
         )}
       </ul>
+      { props.addingDeck && <input ref="add" /> }
     </nav>);
   }
 });
@@ -62,7 +66,7 @@ const decks = [{
 }];
 
 ReactDOM.render(<App>
-  <Sidebar decks={decks} />
+  <Sidebar decks={decks} addingDeck={true}/>
   <main className="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
     <br />
     <br />
