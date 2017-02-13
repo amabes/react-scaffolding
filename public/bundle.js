@@ -23,44 +23,39 @@ var App = function App(props) {
   return React.createElement(
     "div",
     { className: "app" },
-    props.children
+    React.createElement(Navbar, null),
+    React.createElement(
+      "div",
+      { className: "container-fluid" },
+      React.createElement(
+        "div",
+        { className: "row" },
+        props.children
+      )
+    )
   );
 };
 
-var Links = React.createClass({
-  displayName: "Links",
+var Navbar = React.createClass({
+  displayName: "Navbar",
   render: function render() {
     return React.createElement(
-      "ul",
-      { className: "list-group list-group-flush" },
-      this.props.links.map(function (link, i) {
-        return React.createElement(Link, { link: link, key: i });
-      })
-    );
-  }
-});
-
-var Link = React.createClass({
-  displayName: "Link",
-  isExternal: function isExternal(href) {
-    if (href.indexOf('http') !== -1) {
-      return true;
-    }
-
-    return false;
-  },
-  handleClick: function handleClick() {
-    if (this.props.link.href && this.isExternal(this.props.link.href)) {
-      console.log('external');
-    } else {
-      console.log('internal');
-    }
-  },
-  render: function render() {
-    return React.createElement(
-      "li",
-      { className: "list-group-item", onClick: this.handleClick },
-      this.props.link.text
+      "nav",
+      { className: "navbar navbar-toggleable-md navbar-inverse bg-inverse" },
+      React.createElement(
+        "a",
+        { className: "navbar-brand", href: "javascript:void(0);" },
+        "React Scaffolding"
+      ),
+      React.createElement(
+        "div",
+        { className: "collapse navbar-collapse", id: "navbarsExampleDefault" },
+        React.createElement(
+          "button",
+          { className: "btn btn-primary btn-sm", type: "submit" },
+          "New Deck"
+        )
+      )
     );
   }
 });
@@ -68,112 +63,44 @@ var Link = React.createClass({
 var Sidebar = React.createClass({
   displayName: "Sidebar",
   render: function render() {
-    var props = this.props;
-
     return React.createElement(
-      "div",
-      { className: "sidebar" },
+      "nav",
+      { className: "col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar" },
       React.createElement(
-        "h2",
-        null,
-        "Decks"
-      ),
-      props.decks.map(function (deck, i) {
-        return React.createElement(
-          "div",
-          { className: "card col-xs-6", key: i },
-          React.createElement("img", { className: "card-img-top", src: deck.url }),
-          React.createElement(
-            "div",
-            { className: "card-block" },
-            React.createElement(
-              "h4",
-              { className: "card-title" },
-              deck.title
-            ),
-            React.createElement(
-              "p",
-              { className: "card-text" },
-              deck.body
-            )
-          ),
-          deck.links && React.createElement(Links, { links: deck.links })
-        );
-      }),
-      props.addingDeck && React.createElement("input", { ref: "add" })
-    );
-  }
-});
-
-var Cards = React.createClass({
-  displayName: "Cards",
-  render: function render() {
-    var props = this.props;
-
-    return React.createElement(
-      "div",
-      { className: "row" },
-      props.decks.map(function (deck, i) {
-        return React.createElement(
-          "div",
-          { className: "col-4", key: i },
-          React.createElement(
-            "div",
-            { className: "card" },
-            deck.url && React.createElement("img", { className: "card-img-top", src: deck.url }),
-            React.createElement(
-              "div",
-              { className: "card-block" },
-              React.createElement(
-                "p",
-                { className: "card-text" },
-                deck.body
-              )
-            ),
-            deck.links && React.createElement(Links, { links: deck.links })
-          )
-        );
-      })
+        "ul",
+        { className: "nav nav-pills flex-column" },
+        this.props.decks.map(function (deck, i) {
+          return React.createElement(
+            "li",
+            { key: i, className: "nav-item" },
+            deck.title
+          );
+        })
+      )
     );
   }
 });
 
 var decks = [{
   id: +new Date(),
-  url: 'http://lorempixel.com/230/151/',
-  body: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.',
-  links: [{
-    text: 'Cras justo odio',
-    href: '#internal-unique-id'
-  }, {
-    text: 'Dapibus ac facilisis in',
-    href: 'http://google.com'
-  }, {
-    text: 'Vestibulum at eros',
-    href: '#internal-unique-id'
-  }]
+  title: 'Deck 1'
 }, {
   id: +new Date(),
-  body: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.',
-  links: [{
-    text: 'Cras justo odio 2',
-    href: 'http://google.com'
-  }, {
-    text: 'Dapibus ac facilisis in 2',
-    href: '#internal-unique-id'
-  }, {
-    text: 'Vestibulum at eros 2',
-    href: 'http://google.com'
-  }]
-}, {
-  id: +new Date(),
-  body: 'Some quick example text to build on the card title and make up the bulk of the card\'s content.'
+  title: 'Deck 2'
 }];
 
 ReactDOM.render(React.createElement(
   App,
-  { "class": "container" },
-  React.createElement(Cards, { decks: decks })
+  null,
+  React.createElement(Sidebar, { decks: decks }),
+  React.createElement(
+    "main",
+    { className: "col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3" },
+    React.createElement("br", null),
+    React.createElement("br", null),
+    React.createElement("br", null),
+    "Hello"
+  )
 ), document.getElementById('root'));
 
 },{}]},{},[1]);

@@ -18,58 +18,37 @@ const store = Redux.createStore(Redux.combineReducers({
 
 const App = (props) => {
   return (
-  <div className="app container">
-    {props.children}
+  <div className="app">
+    <Navbar />
+    <div className="container-fluid">
+      <div className="row">
+        {props.children}
+      </div>
+    </div>
   </div>);
 };
 
-const Links = React.createClass({
+const Navbar = React.createClass({
   render() {
-    return (
-      <ul className="list-group list-group-flush">
-        {this.props.links.map((link, i) =>
-          <Link link={link} key={i} />
-        )}
-      </ul>
-    )
+    return(<nav className="navbar navbar-toggleable-md navbar-inverse bg-inverse">
+      <a className="navbar-brand" href="javascript:void(0);">React Scaffolding</a>
+
+      <div className="collapse navbar-collapse" id="navbarsExampleDefault">
+       <button className="btn btn-primary btn-sm" type="submit">New Deck</button>
+      </div>
+   </nav>);
   }
-});
-
-const Link = React.createClass({
-  isExternal(href) {
-    if (href.indexOf('http') !== -1) {
-      return true
-    }
-
-    return false;
-  },
-
-  handleClick() {
-    if (this.props.link.href && this.isExternal(this.props.link.href)) {
-      console.log('external');
-    } else {
-      console.log('internal')
-    }
-  },
-
-  render() {
-    return (
-      <li className="list-group-item" onClick={this.handleClick}>
-        {this.props.link.text}
-      </li>
-    )
-  }
-});
+})
 
 const Sidebar = React.createClass({
   render() {
-    let props = this.props;
-
-    return(<div className="deck">
-      {props.decks.map((deck, i) =>
-        { deck.title }
-      )}
-    </div>);
+    return(<nav className="col-sm-3 col-md-2 hidden-xs-down bg-faded sidebar">
+      <ul className="nav nav-pills flex-column">
+        {this.props.decks.map((deck, i) =>
+          <li key={i} className="nav-item">{ deck.title }</li>
+        )}
+      </ul>
+    </nav>);
   }
 });
 
@@ -84,4 +63,10 @@ const decks = [{
 
 ReactDOM.render(<App>
   <Sidebar decks={decks} />
+  <main className="col-sm-9 offset-sm-3 col-md-10 offset-md-2 pt-3">
+    <br />
+    <br />
+    <br />
+    Hello
+  </main>
 </App>, document.getElementById('root'));
