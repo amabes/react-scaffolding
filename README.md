@@ -37,7 +37,7 @@ $ npm i --save-dev node-sass
   "scripts":{
     ...
     "build": "watchify src/app.js -o public/bundle.js -t [ babelify --presets [ react es2015 ] ]",
-    "start": "cd public; live-server --port=1234 --entry-file=index.html",
+    "start": "cd public; live-server --port=2468 --entry-file=index.html",
     "scss": "node-sass --output-style compressed -w -o public/css src/scss"
   }
 }
