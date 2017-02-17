@@ -1,52 +1,12 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
+import { createStore, combineReducers } from 'redux';
 import { addDeck, showAddDeck, hideAddDeck } from './actions';
 import * as reducers from './reducers';
+import App from './components/App';
+import Sidebar from './components/Sidebar';
 
-const store = Redux.createStore(Redux.combineReducers(reducers));
-
-const App = (props) => {
-  return (
-  <div className="app">
-    <Navbar />
-    <div className="container-fluid">
-      <div className="row">
-        {props.children}
-      </div>
-    </div>
-  </div>);
-};
-
-const Navbar = React.createClass({
-  render() {
-    return(<nav className="navbar navbar-toggleable-md navbar-inverse bg-inverse">
-      <a className="navbar-brand" href="javascript:void(0);">React Scaffolding</a>
-      <div className="collapse navbar-collapse" id="navbarsExampleDefault"></div>
-   </nav>);
-  }
-})
-
-const Sidebar = React.createClass({
-  render() {
-    let props = this.props;
-
-    return(<nav className="col-sm-4 col-lg-3 hidden-xs-down bg-faded sidebar">
-      <h5>All Decks</h5>
-      <ul className="nav nav-pills flex-column">
-        {props.decks.map((deck, i) =>
-          <li key={i} className="nav-item">{ deck.name }</li>
-        )}
-      </ul>
-      { props.addingDeck && <input autoFocus ref="add" onKeyPress={this.createDeck}/> }
-      <button onClick={e => this.props.showAddDeck()} className="btn btn-primary btn-sm" type="submit">New Deck</button>
-    </nav>);
-  },
-  createDeck(e){
-    if (e.which !== 13) return;
-    var name = ReactDOM.findDOMNode(this.refs.add).value;
-
-    this.props.addDeck(name);
-    this.props.hideAddDeck();
-  }
-});
+const store = createStore(combineReducers(reducers));
 
 function run() {
   let state = store.getState();

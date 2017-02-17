@@ -32,6 +32,9 @@
     "eslint-plugin-promise": "^3.4.0",
     "eslint-plugin-react": "^6.9.0",
     "live-server": "^1.2.0",
+    "react": "^15.4.2",
+    "react-dom": "^15.4.2",
+    "redux": "^3.6.0",
     "watchify": "^3.9.0"
   },
   "devDependencies": {
